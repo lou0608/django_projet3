@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Les prédictions</title>
+    <link rel ="stylesheet" href="{% static 'css/auth.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
+<!-- charger la librairie-->
+    <script src="https://cdn.plot.ly/plotly-2.9.0.min.js"></script>
+
+
+</head>
+<body>
+
+<p>
+<h1>Authentification</h1>
+</p>
+
+<div id="content">
+
+<form action="#" method = "POST">
+
+    {% csrf_token %}
+    
+    <p>
+    <label for= "Nom"> Nom : </label>
+    <input type = "text" id="Name" name = "Nom" required>
+    </p>
+
+    <p>
+    <label for= "Prenom"> Prenom : </label>
+    <input type = "text" id="Prenom" name = "Prenom" required>
+    </p>
+
+    <p>
+    <label for="Mot de passe"> Mot de passe : </label>
+    <input type="password" id="Mot_de_passe" name="Mot_de_passe" required>
+    </p>
+
+    
+    <div>
+    <input type="submit" class="bouton_submit" name="valider" value="S'authentifier" >
+    </div>  
+     
+
+</form>
+</div> 
+
+<!--<form method="POST" action="/auth/" >
+    <table>
+        {% csrf_token %}
+        {{ form2.as_table }}
+    </table>
+        <input type="submit" value="Envoyer">
+    </form>
+-->
+
+
+</body>
+</html>
