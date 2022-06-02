@@ -1,0 +1,4 @@
+artifact_location: file:///C:/Users/Lou%20Doussiet/Downloads/Co_bdd_ia/mlruns/1
+experiment_id: '1'
+lifecycle_stage: active
+name: mlflow_experiment

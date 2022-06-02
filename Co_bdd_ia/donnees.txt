@@ -1,0 +1,45 @@
+case criteres.TypeProjet
+	WHEN "Investissement" THEN 0
+        WHEN "Résidence principale" THEN  1
+        When "Résidence secondaire" THEN 2 
+        ELSE "Inconnu"
+END as TypeProjet,
+
+case mandat.StatutProspectMandatClientID            
+WHEN 1 THEN 'Traitement du lead'         
+WHEN 5 THEN 'Lead perdu'         
+WHEN 6 THEN 'Mission en cours'         
+WHEN 7 THEN "Preparation de l'acte"         
+WHEN 8 THEN 'Entrée dans les lieux'         
+WHEN 9 THEN 'Mandat perdu'         
+WHEN 12 THEN 'Vente du service'         
+ELSE 'Inconnu' end as StatutMandat, 
+
+case mandat.TypeDeMission   
+WHEN 0 THEN 'Inconnu'         
+WHEN 1 THEN 'Online'         
+WHEN 2 THEN 'Terrain'         
+WHEN 3 THEN 'Neuf'         
+WHEN 4 THEN 'Vente'         
+WHEN 5 THEN 'Location'         
+WHEN 6 THEN "Apport d'affaires" 
+end as TypeMission,
+
+case mandat.TypeDeMandat   
+WHEN 0 THEN 'Exclusif'         
+WHEN 1 THEN "Semi-exclusif"         
+WHEN 2 THEN "Avec préavis" 
+end as TypeMandat,
+
+case criteres.TypeBienEnum   
+WHEN 1 THEN 'Maison'         
+WHEN 2 THEN 'Appartement'        
+WHEN 3 THEN 'Terrain'         
+WHEN 4 THEN 'Autre'         
+WHEN 5 THEN 'Studio'         
+WHEN 6 THEN 'Local'         
+WHEN 7 THEN 'Maison ou appartement'         
+WHEN 8 THEN 'Immeuble'         
+ELSE 'Inconnu' 
+END as TypeBien 
+
