@@ -1,0 +1,41 @@
+- Date de création du mandat
+- Date de signature du mandat
+- Nombre de jour entre la creation et la signature du mandat
+- Date de signature du compromis
+- Nombre de jour entre la creation et la signature du compromis
+- Budget max
+- Type de bien
+- Type de projet
+
+SELECT TOP(100000)
+m.[MandatId] as 'mandate_id',
+CONVERT(DATE, m.[DateCreation]) as 'created_at',
+CONVERT(DATE, m.[DateMandatSignature]) as 'mandate_signed_at',
+CASE
+    WHEN m.[DateMandatSignature] IS NOT NULL THEN DATEDIFF(day, m.[DateCreation], m.[DateMandatSignature])
+    ELSE 0
+END as 'mandate_signature_delay',
+CONVERT(DATE, m.[DateCompromisSignature]) as 'act_signed_at',
+CASE
+    WHEN m.[DateCompromisSignature] IS NOT NULL THEN DATEDIFF(day, m.[DateCreation], m.[DateCompromisSignature])
+    ELSE 0
+END as 'act_signature_delay',
+CASE
+    WHEN c.[BudgetMaxEuro] >= 1000 THEN c.[BudgetMaxEuro]
+    WHEN c.[BudgetMaxEuro] < 1000 THEN c.[BudgetMaxEuro] * 1000
+    ELSE c.[BudgetMaxEuro]
+END as 'budget',
+c.[TypeBienEnum] as 'property_type',
+c.[TypeProjet] as 'project_type'
+FROM [Mandat] m
+INNER JOIN [BienMandat] bm ON bm.[MandatId] = m.MandatId
+INNER JOIN [Criteres] c ON m.[CritereId] = c.[CritereId]
+WHERE m.[IsSupprime] = 0 AND m.[StatutProspectMandatClientId] IN (7, 8)
+GROUP BY m.[MandatId], m.[DateCreation], m.[DateMandatSignature], m.[DateCompromisSignature], m.[StatutProspectMandatClientId], c.[TypeBienEnum], c.[BudgetMinEuro], c.[BudgetMaxEuro], c.[TypeProjet]
+ORDER BY m.[MandatId] DESC;
+
+----
+
+- Nombre de biens (remonté par tranche)
+- Localisation de la recherche (Lieu, quartier, ...)
+- Type de mandat

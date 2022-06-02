@@ -1,0 +1,53 @@
+
+Requête avec toutes les données
+
+SELECT TOP(100000)
+m.[MandatId] as 'MandatId',
+m.[StatutProspectMandatClientId] as 'StatutMandat',
+CONVERT(DATE, m.[DateMandatSignature]) as 'DateMandatSignature',
+CONVERT(DATE, m.[DateCompromisSignature]) as 'DateCompromisSignature',
+CASE
+    WHEN c.[BudgetMaxEuro] >= 1000 THEN c.[BudgetMaxEuro]
+    -- WHEN c.[BudgetMaxEuro] < 1000 THEN c.[BudgetMaxEuro] * 1000
+    ELSE c.[BudgetMaxEuro]
+END as 'BudgetMaxEuro',
+c.[TypeBienEnum] as 'TypeBienEnum',
+c.[TypeProjet] as 'TypeProjet',
+c.[SurfaceMin] as 'SurfaceMin',
+c.[NombrePiecesEnum] as 'NombrePiecesEnum',
+c.[NombreChambresEnum] as 'NombreChambresEnum',
+COUNT(bm.[BienMandatId]) as 'NombreDeBiens'
+FROM [Mandat] m
+LEFT JOIN [BienMandat] bm ON bm.[MandatId] = m.MandatId
+INNER JOIN [Criteres] c ON m.[CritereId] = c.[CritereId]
+WHERE m.[IsSupprime] = 0 AND m.[StatutProspectMandatClientId] IN (5, 6, 7, 8, 9)
+GROUP BY m.[MandatId], m.[StatutProspectMandatClientId], m.[DateMandatSignature], m.[DateCompromisSignature], c.[BudgetMaxEuro], c.[TypeBienEnum], c.[TypeProjet], c.[SurfaceMin], c.[NombrePiecesEnum], c.[NombreChambresEnum]
+ORDER BY m.[MandatId] DESC;
+
+Requête avec toutes les données filtrées :
+
+SELECT TOP(100000)
+m.[MandatId] as 'MandatId',
+MAX(l.[Departement_LocalisationId]) as 'DepartementLocalisationId',
+m.[StatutProspectMandatClientId] as 'StatutMandat',
+CONVERT(DATE, m.[DateMandatSignature]) as 'DateMandatSignature',
+CONVERT(DATE, m.[DateCompromisSignature]) as 'DateCompromisSignature',
+CASE
+    WHEN c.[BudgetMaxEuro] >= 1000 THEN c.[BudgetMaxEuro]
+    WHEN c.[BudgetMaxEuro] < 1000 THEN c.[BudgetMaxEuro] * 1000
+    ELSE c.[BudgetMaxEuro]
+END as 'BudgetMaxEuro',
+c.[TypeBienEnum] as 'TypeBienEnum',
+c.[TypeProjet] as 'TypeProjet',
+c.[SurfaceMin] as 'SurfaceMin',
+c.[NombrePiecesEnum] as 'NombrePiecesEnum',
+c.[NombreChambresEnum] as 'NombreChambresEnum',
+COUNT(bm.[BienMandatId]) as 'NombreDeBiens'
+FROM [Mandat] m
+LEFT JOIN [BienMandat] bm ON bm.[MandatId] = m.MandatId
+INNER JOIN [Criteres] c ON m.[CritereId] = c.[CritereId]
+LEFT JOIN [LocalisationCritere] lc ON c.[CritereId] = lc.[CritereId]
+LEFT JOIN [Localisation] l ON lc.[LocalisationId] = l.[LocalisationId]
+WHERE c.[BudgetMaxEuro] > 10 AND l.[Departement_LocalisationId] IS NOT NULL AND ((c.[TypeBienEnum] <> 8 AND c.[SurfaceMin] < 10000) OR (c.[TypeBienEnum] = 8)) AND m.[IsSupprime] = 0 AND m.[StatutProspectMandatClientId] IN (5, 6, 7, 8, 9) AND c.[BudgetMaxEuro] <> 0 AND c.[TypeBienEnum] <> 0 AND LEN(c.[TypeProjet]) <> 0 AND c.[NombrePiecesEnum] <> 0 AND c.[NombreChambresEnum] <> 0
+GROUP BY m.[MandatId], m.[StatutProspectMandatClientId], m.[DateMandatSignature], m.[DateCompromisSignature], c.[BudgetMaxEuro], c.[TypeBienEnum], c.[TypeProjet], c.[SurfaceMin], c.[NombrePiecesEnum], c.[NombreChambresEnum]
+ORDER BY m.[MandatId] DESC;

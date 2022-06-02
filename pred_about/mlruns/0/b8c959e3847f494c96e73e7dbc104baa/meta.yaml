@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Lou%20Doussiet/Downloads/pred_about/mlruns/0/b8c959e3847f494c96e73e7dbc104baa/artifacts
+end_time: 1652860579494
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: b8c959e3847f494c96e73e7dbc104baa
+run_uuid: b8c959e3847f494c96e73e7dbc104baa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1652860559971
+status: 3
+tags: []
+user_id: Lou Doussiet

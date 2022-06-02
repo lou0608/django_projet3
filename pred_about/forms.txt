@@ -1,0 +1,23 @@
+from django import forms
+
+# Déclaration du Formulaire
+
+# required = False ==> pas requis
+# widget pour modifier les champs
+
+TYPEMISSION = (("Inconnu",0),( "Online","Online"), ("Terrain","Terrain"),("Neuf", "Neuf"), ("Vente","Vente"), ("Location","Location"), ("Apport d'affaires","Apport d'affaires"))
+TYPEBIEN = (("Maison",1),("Appartement","Appartement"), ("Terrain","Terrain"), ("Autre","Autre"), ("Studio","Studio"), ("Local","Local"),("Maison ou appartement","Maison ou appartement"), ("Immeuble","Immeuble"), ("Inconnu","Inconnu"))          
+TYPEPROJET = (("Investissement",0),("Résidence principale","Résidence principale"),("Résidence secondaire","Résidence secondaire"))
+
+NOMBREPIECES = ((1,1), (2,2), (3,3), (4,4), (5,5), (6,6))
+NOMBRECHAMBRES = ((1,1), (2,2), (3,3), (4,4), (5,5), (6,6))
+
+class RechercheForm(forms.Form):
+    TypeMission = forms.ChoiceField(choices=TYPEMISSION, label = "Type de Mission")
+    TypeBien = forms.ChoiceField(choices = TYPEBIEN,label = "Type de bien")
+    TypeProjet = forms.ChoiceField(choices = TYPEPROJET, label= "Type de Projet")
+    CodePostal= forms.IntegerField(label = "Code Postal")
+    Budget = forms.IntegerField(label = "Budget", min_value=5000)
+    NombrePieces = forms.ChoiceField(choices = NOMBREPIECES, label = "Nombre de Pièces" )
+    NombreChambres = forms.ChoiceField(choices = NOMBRECHAMBRES, label = "Nombre de Chambres")
+    Surface = forms.IntegerField(label = "Surface", initial=10)
